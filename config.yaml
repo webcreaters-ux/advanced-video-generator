@@ -1,0 +1,14 @@
+video:
+  resolution: "1920x1080"
+  fps: 30
+  codec: "libx264"
+
+text_to_speech:
+  engine: "google"
+  language: "en-US"
+  rate: 1.0
+
+image_generation:
+  model: "stabilityai/stable-diffusion-2-1"
+  steps: 25
+  guidance_scale: 7.5

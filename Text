@@ -1,0 +1,271 @@
+
+## **2. colab_notebook.ipynb**
+
+```python
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "view-in-github"
+   },
+   "source": [
+    "<a href=\"https://colab.research.google.com/github/yourusername/advanced-video-generator/blob/main/colab_notebook.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "V6ua7DmAKf53"
+   },
+   "source": [
+    "# 🎬 Advanced Video Generator - Google Colab\n",
+    "\n",
+    "**Generate professional videos from scripts using AI**\n",
+    "\n",
+    "This notebook provides a complete video generation pipeline with GPU acceleration.\n",
+    "\n",
+    "## Features\n",
+    "- 🎤 Text-to-Speech with multiple engines\n",
+    "- 🖼️ AI image generation with Stable Diffusion\n",
+    "- 📝 Automatic script processing\n",
+    "- 🎞️ Professional video editing\n",
+    "- ☁️ Google Drive integration\n",
+    "- ⚡ GPU acceleration\n",
+    "\n",
+    "## Quick Start\n",
+    "1. Run all cells (Runtime → Run all)\n",
+    "2. Use the Interactive Interface (Cell below)\n",
+    "3. Generate your first video!\n",
+    "\n",
+    "**Note:** Enable GPU for best performance (Runtime → Change runtime type → GPU)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "E6PIF4FbL9u1"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Installation\n",
+    "!git clone https://github.com/yourusername/advanced-video-generator.git\n",
+    "%cd advanced-video-generator\n",
+    "\n",
+    "# Install dependencies\n",
+    "!pip install -q -r requirements.txt\n",
+    "!apt-get install -y ffmpeg > /dev/null 2>&1\n",
+    "\n",
+    "print(\"✅ Installation complete!\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "0qk1A55VMoGV"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Import and Setup\n",
+    "import sys\n",
+    "sys.path.append('/content/advanced-video-generator')\n",
+    "\n",
+    "from advanced_video_generator import ColabVideoGenerator\n",
+    "from advanced_video_generator.ui.colab_ui import ColabVideoGeneratorUI\n",
+    "import torch\n",
+    "\n",
+    "# Check GPU\n",
+    "if torch.cuda.is_available():\n",
+    "    print(f\"✅ GPU Available: {torch.cuda.get_device_name(0)}\")\n",
+    "else:\n",
+    "    print(\"⚠️  Using CPU (slower). Enable GPU: Runtime → Change runtime type → GPU\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "Uc5oYQXeNIML"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Interactive Interface\n",
+    "# Run this cell to launch the interactive UI\n",
+    "\n",
+    "ui = ColabVideoGeneratorUI()\n",
+    "ui.display()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "D41i2KquNQwm"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Quick Generate\n",
+    "# Generate a video quickly without the UI\n",
+    "\n",
+    "script = \"\"\"Welcome to our amazing video!\n",
+    "\n",
+    "This video was generated entirely with AI.\n",
+    "\n",
+    "The future of content creation is here.\n",
+    "\n",
+    "Generate your own videos with this tool!\"\"\"\n",
+    "\n",
+    "generator = ColabVideoGenerator()\n",
+    "video_path = generator.generate_from_script(script, \"quick_demo.mp4\")\n",
+    "\n",
+    "if video_path:\n",
+    "    print(f\"✅ Video generated: {video_path}\")\n",
+    "    \n",
+    "    # Show preview\n",
+    "    from IPython.display import HTML\n",
+    "    import base64\n",
+    "    \n",
+    "    video_file = open(video_path, 'rb').read()\n",
+    "    video_url = f\"data:video/mp4;base64,{base64.b64encode(video_file).decode()}\"\n",
+    "    \n",
+    "    display(HTML(f\"\"\"\n",
+    "    <h3>Video Preview:</h3>\n",
+    "    <video width=\"640\" controls>\n",
+    "        <source src=\"{video_url}\" type=\"video/mp4\">\n",
+    "    </video>\n",
+    "    \"\"\"))\n",
+    "else:\n",
+    "    print(\"❌ Video generation failed\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "NWLv4CtgNd-g"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Mount Google Drive\n",
+    "# Save your videos to Google Drive\n",
+    "\n",
+    "from google.colab import drive\n",
+    "drive.mount('/content/drive')\n",
+    "\n",
+    "print(\"✅ Google Drive mounted at /content/drive\")\n",
+    "print(\"Your videos can be saved to: /content/drive/MyDrive/VideoGenerator\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "H1eWqSChNi0C"
+   },
+   "outputs": [],
+   "source": [
+    "# @title File Management\n",
+    "# Upload scripts and download videos\n",
+    "\n",
+    "from google.colab import files\n",
+    "import os\n",
+    "\n",
+    "def upload_script():\n",
+    "    \"\"\"Upload a script file\"\"\"\n",
+    "    uploaded = files.upload()\n",
+    "    for filename in uploaded.keys():\n",
+    "        print(f'✅ Uploaded {filename}')\n",
+    "        return filename\n",
+    "    return None\n",
+    "\n",
+    "def download_video(video_path):\n",
+    "    \"\"\"Download a video file\"\"\"\n",
+    "    if os.path.exists(video_path):\n",
+    "        files.download(video_path)\n",
+    "        return True\n",
+    "    return False\n",
+    "\n",
+    "# Example usage:\n",
+    "# script_file = upload_script()\n",
+    "# download_video(\"/content/advanced-video-generator/output/my_video.mp4\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "id": "3CvC-_BqNoSX"
+   },
+   "outputs": [],
+   "source": [
+    "# @title Advanced Configuration\n",
+    "# Customize generation settings\n",
+    "\n",
+    "import yaml\n",
+    "\n",
+    "config = {\n",
+    "    'video': {\n",
+    "        'resolution': '1920x1080',\n",
+    "        'fps': 30,\n",
+    "        'codec': 'libx264'\n",
+    "    },\n",
+    "    'tts': {\n",
+    "        'engine': 'google',\n",
+    "        'language': 'en-US',\n",
+    "        'rate': 1.0\n",
+    "    },\n",
+    "    'image_gen': {\n",
+    "        'model': 'stabilityai/stable-diffusion-2-1',\n",
+    "        'steps': 25\n",
+    "    }\n",
+    "}\n",
+    "\n",
+    "# Save config\n",
+    "with open('config.yaml', 'w') as f:\n",
+    "    yaml.dump(config, f)\n",
+    "\n",
+    "print(\"✅ Configuration saved. Edit config.yaml to customize.\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "id": "c2cPwNHdNuNa"
+   },
+   "source": [
+    "## 📚 Documentation\n",
+    "\n",
+    "For detailed documentation, visit the [GitHub repository](https://github.com/yourusername/advanced-video-generator).\n",
+    "\n",
+    "### Tips for Best Results:\n",
+    "1. **Use descriptive scripts** - Helps AI generate better images\n",
+    "2. **Enable GPU** - Much faster image generation\n",
+    "3. **Save to Google Drive** - Colab sessions expire\n",
+    "4. **Experiment with settings** - Try different TTS engines and image models\n",
+    "\n",
+    "### Need Help?\n",
+    "- Check the [GitHub Issues](https://github.com/yourusername/advanced-video-generator/issues)\n",
+    "- Restart runtime if you encounter errors\n",
+    "- Clear output directory if running out of space\n",
+    "\n",
+    "---\n",
+    "\n",
+    "**Made with ❤️ by the Advanced Video Generator Team**"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "provenance": [],
+   "include_colab_link": true
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "name": "python3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

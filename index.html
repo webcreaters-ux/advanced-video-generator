@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Advanced Video Generator - AI-Powered Video Creation</title>
+    <meta name="description" content="Generate professional videos from scripts using AI-powered tools - Text-to-Speech, AI Image Generation, Automatic Subtitles, and more!">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Advanced Video Generator">
+    <meta property="og:description" content="Generate professional videos from scripts using AI-powered tools">
+    <meta property="og:image" content="assets/og-image.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <i class="fas fa-film"></i>
+                <span>Video Generator</span>
+            </a>
+            <div class="nav-menu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#demo" class="nav-link">Demo</a>
+                <a href="#docs" class="nav-link">Documentation</a>
+                <a href="https://github.com/yourusername/advanced-video-generator" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="hero-gradient"></div>
+            <div class="hero-particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>AI-Powered Video Creation</span>
+            </div>
+            <h1 class="hero-title">
+                Transform Your Scripts Into
+                <span class="gradient-text">Professional Videos</span>
+            </h1>
+            <p class="hero-description">
+                Generate stunning videos from text using AI-powered Text-to-Speech, 
+                AI Image Generation, Automatic Subtitles, and professional video editing tools.
+            </p>
+            <div class="hero-buttons">
+                <a href="#demo" class="btn btn-primary">
+                    <i class="fas fa-play"></i>
+                    Try Demo
+                </a>
+                <a href="https://github.com/yourusername/advanced-video-generator" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i>
+                    View on GitHub
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">4+</span>
+                    <span class="stat-label">TTS Engines</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">AI</span>
+                    <span class="stat-label">Image Generation</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Possibilities</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="video-preview-card">
+                <div class="video-preview-header">
+                    <div class="preview-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <span class="preview-title">output_video.mp4</span>
+                </div>
+                <div class="video-preview-content">
+                    <div class="preview-animation">
+                        <div class="scene scene-1">
+                            <i class="fas fa-microphone-alt"></i>
+                            <span>Text-to-Speech</span>
+                        </div>
+                        <div class="scene scene-2">
+                            <i class="fas fa-image"></i>
+                            <span>AI Images</span>
+                        </div>
+                        <div class="scene scene-3">
+                            <i class="fas fa-video"></i>
+                            <span>Video Output</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Powerful Features</h2>
+                <p class="section-description">
+                    Everything you need to create professional videos from your scripts
+                </p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Multiple TTS Engines</h3>
+                    <p class="feature-description">
+                        Choose from Google TTS, Microsoft Edge, Coqui TTS, or pyttsx3 for natural-sounding voiceovers.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">Google</span>
+                        <span class="tag">Edge</span>
+                        <span class="tag">Coqui</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="feature-title">AI Image Generation</h3>
+                    <p class="feature-description">
+                        Generate stunning visuals using Stable Diffusion, DALL-E Mini, or CLIP-guided generation.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">Stable Diffusion</span>
+                        <span class="tag">DALL-E</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-closed-captioning"></i>
+                    </div>
+                    <h3 class="feature-title">Automatic Subtitles</h3>
+                    <p class="feature-description">
+                        Add professional subtitles automatically with customizable styles and positioning.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">Auto-generated</span>
+                        <span class="tag">Customizable</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="feature-title">Smart Transitions</h3>
+                    <p class="feature-description">
+                        50+ transition effects to make your videos flow smoothly between scenes.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">50+ Effects</span>
+                        <span class="tag">Pro Quality</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="feature-title">Cloud Integration</h3>
+                    <p class="feature-description">
+                        Save directly to Google Drive, or run entirely in Google Colab for free GPU access.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">Google Drive</span>
+                        <span class="tag">Colab</span>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title">GPU Accelerated</h3>
+                    <p class="feature-description">
+                        Fast AI processing with CUDA support for quick video generation.
+                    </p>
+                    <div class="feature-tags">
+                        <span class="tag">CUDA</span>
+                        <span class="tag">Fast</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Try It Out</h2>
+                <p class="section-description">
+                    Enter your script and see how the video generator works
+                </p>
+            </div>
+            <div class="demo-container">
+                <div class="demo-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-edit"></i>
+                        <span>Script Input</span>
+                    </div>
+                    <div class="panel-content">
+                        <textarea id="script-input" class="script-textarea" placeholder="Enter your script here...">Welcome to the world of artificial intelligence!
+
+Today, we explore how AI is revolutionizing various industries.
+
+From healthcare to finance, AI is making systems smarter and more efficient.
+
+Machine learning algorithms can analyze vast amounts of data.
+
+They identify patterns that humans might never notice.
+
+Natural language processing allows computers to understand human language.
+
+Computer vision enables machines to see and interpret visual information.
+
+The future is here, and it's powered by artificial intelligence.
+
+Let's build a better tomorrow together with AI!</textarea>
+                    </div>
+                </div>
+                <div class="demo-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Options</span>
+                    </div>
+                    <div class="panel-content">
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label class="option-label">Video Quality</label>
+                                <select id="quality-select" class="option-select">
+                                    <option value="low">Low (720p)</option>
+                                    <option value="medium" selected>Medium (1080p)</option>
+                                    <option value="high">High (1440p)</option>
+                                    <option value="ultra">Ultra (4K)</option>
+                                </select>
+                            </div>
+                            <div class="option-group">
+                                <label class="option-label">TTS Engine</label>
+                                <select id="tts-select" class="option-select">
+                                    <option value="google" selected>Google TTS</option>
+                                    <option value="edge">Microsoft Edge</option>
+                                    <option value="coqui">Coqui TTS</option>
+                                    <option value="pyttsx3">pyttsx3</option>
+                                </select>
+                            </div>
+                            <div class="option-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="images-checkbox" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Generate AI Images
+                                </label>
+                            </div>
+                            <div class="option-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="subtitles-checkbox" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Add Subtitles
+                                </label>
+                            </div>
+                            <div class="option-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="transitions-checkbox" checked>
+                                    <span class="checkbox-custom"></span>
+                                    Add Transitions
+                                </label>
+                            </div>
+                        </div>
+                        <button id="generate-btn" class="btn btn-primary btn-full">
+                            <i class="fas fa-rocket"></i>
+                            Generate Video
+                        </button>
+                    </div>
+                </div>
+                <div class="demo-panel demo-output">
+                    <div class="panel-header">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Output</span>
+                    </div>
+                    <div class="panel-content">
+                        <div id="output-area" class="output-area">
+                            <div class="output-placeholder">
+                                <i class="fas fa-video"></i>
+                                <p>Your generated video will appear here</p>
+                            </div>
+                        </div>
+                        <div id="progress-container" class="progress-container hidden">
+                            <div class="progress-bar">
+                                <div id="progress-fill" class="progress-fill"></div>
+                            </div>
+                            <p id="progress-text" class="progress-text">Initializing...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples Section -->
+    <section id="docs" class="docs">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Quick Start</h2>
+                <p class="section-description">
+                    Get started with just a few lines of code
+                </p>
+            </div>
+            <div class="code-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="colab">
+                        <i class="fas fa-book"></i>
+                        Google Colab
+                    </button>
+                    <button class="tab-btn" data-tab="cli">
+                        <i class="fas fa-terminal"></i>
+                        Command Line
+                    </button>
+                    <button class="tab-btn" data-tab="python">
+                        <i class="fab fa-python"></i>
+                        Python API
+                    </button>
+                </div>
+                <div class="tab-content">
+                    <div id="colab-tab" class="tab-pane active">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Run in Google Colab</span>
+                                <button class="copy-btn" data-code="colab-code">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre id="colab-code"><code># Install the package
+!pip install advanced-video-generator
+
+# Import and use
+from advanced_video_generator import create_video_generator
+
+generator = create_video_generator()
+
+result = generator.generate_from_script(
+    script_text="Your script here...",
+    output_path="output.mp4"
+)</code></pre>
+                        </div>
+                        <a href="https://colab.research.google.com/github/yourusername/advanced-video-generator" class="btn btn-primary" target="_blank">
+                            <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
+                        </a>
+                    </div>
+                    <div id="cli-tab" class="tab-pane">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Command Line Usage</span>
+                                <button class="copy-btn" data-code="cli-code">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre id="cli-code"><code># Install
+pip install advanced-video-generator
+
+# Generate a video
+python run.py --script my_script.txt --output video.mp4
+
+# Start web UI
+python run.py --web-ui
+
+# Batch processing
+python run.py --batch --script-dir ./scripts</code></pre>
+                        </div>
+                    </div>
+                    <div id="python-tab" class="tab-pane">
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Python API</span>
+                                <button class="copy-btn" data-code="python-code">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <pre id="python-code"><code>from advanced_video_generator import (
+    create_video_generator,
+    GenerationOptions,
+    VideoQuality
+)
+
+# Create generator
+generator = create_video_generator()
+
+# Configure options
+options = GenerationOptions(
+    quality=VideoQuality.HIGH,
+    generate_images=True,
+    add_subtitles=True,
+    voice_engine="google"
+)
+
+# Generate video
+result = generator.generate_from_script(
+    script_text="Your script text...",
+    output_path="output.mp4",
+    options=options
+)
+
+print(f"Video saved to: {result['output_path']}")</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extensions Section -->
+    <section class="extensions">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Extensions</h2>
+                <p class="section-description">
+                    Extend functionality with powerful add-ons
+                </p>
+            </div>
+            <div class="extensions-grid">
+                <div class="extension-card">
+                    <div class="extension-icon">
+                        <i class="fas fa-user-voice"></i>
+                    </div>
+                    <h3>Voice Cloning</h3>
+                    <p>Clone any voice for custom TTS output</p>
+                    <code>pip install advanced-video-generator[voice_cloning]</code>
+                </div>
+                <div class="extension-card">
+                    <div class="extension-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>Advanced Transitions</h3>
+                    <p>50+ professional transition effects</p>
+                    <code>pip install advanced-video-generator[transitions]</code>
+                </div>
+                <div class="extension-card">
+                    <div class="extension-icon">
+                        <i class="fas fa-closed-captioning"></i>
+                    </div>
+                    <h3>Auto Captions</h3>
+                    <p>Automatic caption generation from audio</p>
+                    <code>pip install advanced-video-generator[captions]</code>
+                </div>
+                <div class="extension-card">
+                    <div class="extension-icon">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3>Social Media Formats</h3>
+                    <p>Export for TikTok, YouTube Shorts, Instagram</p>
+                    <code>pip install advanced-video-generator[social]</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Create Amazing Videos?</h2>
+                <p>Start generating professional videos with AI today - completely free and open source!</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/yourusername/advanced-video-generator" class="btn btn-primary btn-large" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Star on GitHub
+                    </a>
+                    <a href="https://colab.research.google.com/github/yourusername/advanced-video-generator" class="btn btn-secondary btn-large" target="_blank">
+                        <i class="fas fa-rocket"></i>
+                        Launch in Colab
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-film"></i>
+                        <span>Video Generator</span>
+                    </a>
+                    <p>Generate professional videos from scripts using AI-powered tools.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/yourusername/advanced-video-generator" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">API Reference</a>
+                        <a href="#">Examples</a>
+                        <a href="#">Tutorials</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <a href="#">GitHub Discussions</a>
+                        <a href="#">Discord Server</a>
+                        <a href="#">Contributing</a>
+                        <a href="#">Changelog</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="#">License (MIT)</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Advanced Video Generator. Released under the MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

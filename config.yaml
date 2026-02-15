@@ -12,3 +12,27 @@ image_generation:
   model: "stabilityai/stable-diffusion-2-1"
   steps: 25
   guidance_scale: 7.5
+
+# Authentication settings for page activation
+authentication:
+  enabled: true
+  require_activation: true
+  session_duration_hours: 24
+  credentials_file: ".credentials.json"
+  # Default demo credentials
+  demo_client_id: "demo_user"
+  demo_client_secret: "demo_secret_123"
+  # Additional allowed credentials
+  allowed_credentials:
+    - client_id: "user_001"
+      client_secret: "7faffdf2301172cb010f9d44c66b655ceb75d861"
+    - client_id: "Iv23lieRULZyBl5JSKHW"
+      client_secret: "7faffdf2301172cb010f9d44c66b655ceb75d861"
+
+# Extension settings
+extensions:
+  voice_cloning: false
+  advanced_transitions: false
+  auto_captions: false
+  social_media_formats: false
+  video_analytics: false

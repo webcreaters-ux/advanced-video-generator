@@ -38,8 +38,11 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#demo" class="nav-link">Demo</a>
                 <a href="#docs" class="nav-link">Documentation</a>
-                <a href="https://github.com/yourusername/advanced-video-generator" class="nav-link" target="_blank">
+                <a href="https://github.com/webcreaters-ux/advanced-video-generator" class="nav-link" target="_blank">
                     <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="#" class="nav-link" id="logout-btn" style="display: none;">
+                    <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu">
@@ -72,7 +75,7 @@
                     <i class="fas fa-play"></i>
                     Try Demo
                 </a>
-                <a href="https://github.com/yourusername/advanced-video-generator" class="btn btn-secondary" target="_blank">
+                <a href="https://github.com/webcreaters-ux/advanced-video-generator" class="btn btn-secondary" target="_blank">
                     <i class="fab fa-github"></i>
                     View on GitHub
                 </a>
@@ -371,7 +374,7 @@ result = generator.generate_from_script(
     output_path="output.mp4"
 )</code></pre>
                         </div>
-                        <a href="https://colab.research.google.com/github/yourusername/advanced-video-generator" class="btn btn-primary" target="_blank">
+                        <a href="https://colab.research.google.com/github/webcreaters-ux/advanced-video-generator" class="btn btn-primary" target="_blank">
                             <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
                         </a>
                     </div>
@@ -489,11 +492,11 @@ print(f"Video saved to: {result['output_path']}")</code></pre>
                 <h2>Ready to Create Amazing Videos?</h2>
                 <p>Start generating professional videos with AI today - completely free and open source!</p>
                 <div class="cta-buttons">
-                    <a href="https://github.com/yourusername/advanced-video-generator" class="btn btn-primary btn-large" target="_blank">
+                    <a href="https://github.com/webcreaters-ux/advanced-video-generator" class="btn btn-primary btn-large" target="_blank">
                         <i class="fab fa-github"></i>
                         Star on GitHub
                     </a>
-                    <a href="https://colab.research.google.com/github/yourusername/advanced-video-generator" class="btn btn-secondary btn-large" target="_blank">
+                    <a href="https://colab.research.google.com/github/webcreaters-ux/advanced-video-generator" class="btn btn-secondary btn-large" target="_blank">
                         <i class="fas fa-rocket"></i>
                         Launch in Colab
                     </a>
@@ -513,7 +516,7 @@ print(f"Video saved to: {result['output_path']}")</code></pre>
                     </a>
                     <p>Generate professional videos from scripts using AI-powered tools.</p>
                     <div class="social-links">
-                        <a href="https://github.com/yourusername/advanced-video-generator" target="_blank" aria-label="GitHub">
+                        <a href="https://github.com/webcreaters-ux/advanced-video-generator" target="_blank" aria-label="GitHub">
                             <i class="fab fa-github"></i>
                         </a>
                         <a href="#" target="_blank" aria-label="Twitter">
@@ -552,6 +555,45 @@ print(f"Video saved to: {result['output_path']}")</code></pre>
             </div>
         </div>
     </footer>
+
+    <!-- Activation Modal -->
+    <div id="activation-overlay" class="activation-overlay">
+        <div class="activation-modal">
+            <div class="activation-header">
+                <i class="fas fa-lock"></i>
+                <h2>Page Activation Required</h2>
+                <p>Enter your Client ID and Secret to access this application</p>
+            </div>
+            <form id="activation-form" class="activation-form">
+                <div class="form-group">
+                    <label for="client-id">
+                        <i class="fas fa-user"></i>
+                        Client ID
+                    </label>
+                    <input type="text" id="client-id" name="client_id" placeholder="Enter your Client ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="client-secret">
+                        <i class="fas fa-key"></i>
+                        Client Secret
+                    </label>
+                    <input type="password" id="client-secret" name="client_secret" placeholder="Enter your Client Secret" required>
+                </div>
+                <div id="activation-error" class="activation-error hidden">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="error-message">Invalid credentials</span>
+                </div>
+                <button type="submit" class="btn btn-activate">
+                    <i class="fas fa-unlock"></i>
+                    Activate Page
+                </button>
+            </form>
+            <div class="activation-footer">
+                <p>Don't have credentials? <a href="#" id="request-access">Request Access</a></p>
+                <p class="demo-hint">Client ID: <code>Iv23lieRULZyBl5JSKHW</code> | Secret: <code>7faffdf2301172cb010f9d44c66b655ceb75d861</code></p>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="js/app.js"></script>

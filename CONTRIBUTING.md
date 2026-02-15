@@ -33,5 +33,5 @@ Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). We are committ
 1. Fork the repository on GitHub
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/yourusername/advanced-video-generator.git
+   git clone https://github.com/webcreaters-ux/advanced-video-generator.git
    cd advanced-video-generator

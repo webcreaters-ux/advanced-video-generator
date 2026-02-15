@@ -4,6 +4,242 @@
  */
 
 // ========================================
+// Authentication Configuration
+// ========================================
+const AUTH_CONFIG = {
+    // Demo credentials - in production, these would be validated server-side
+    validCredentials: [
+        { clientId: 'demo_user', clientSecret: 'demo_secret_123' },
+        { clientId: 'admin', clientSecret: 'admin123' },
+        { clientId: 'user_001', clientSecret: '7faffdf2301172cb010f9d44c66b655ceb75d861' },
+        { clientId: 'Iv23lieRULZyBl5JSKHW', clientSecret: '7faffdf2301172cb010f9d44c66b655ceb75d861' }
+    ],
+    sessionKey: 'video_generator_session',
+    sessionDuration: 24 * 60 * 60 * 1000 // 24 hours in milliseconds
+};
+
+// ========================================
+// Authentication Manager
+// ========================================
+class AuthManager {
+    constructor() {
+        this.sessionToken = null;
+        this.isAuthenticated = false;
+    }
+
+    /**
+     * Validate client credentials
+     * @param {string} clientId - The client ID
+     * @param {string} clientSecret - The client secret
+     * @returns {object} - Result with success status and message
+     */
+    validateCredentials(clientId, clientSecret) {
+        // Check against valid credentials
+        const valid = AUTH_CONFIG.validCredentials.find(
+            cred => cred.clientId === clientId && cred.clientSecret === clientSecret
+        );
+
+        if (valid) {
+            // Generate session token
+            this.sessionToken = this.generateSessionToken();
+            this.isAuthenticated = true;
+            
+            // Store session
+            this.storeSession(clientId);
+            
+            return {
+                success: true,
+                message: 'Authentication successful',
+                token: this.sessionToken
+            };
+        }
+
+        return {
+            success: false,
+            message: 'Invalid Client ID or Secret'
+        };
+    }
+
+    /**
+     * Generate a random session token
+     * @returns {string} - Session token
+     */
+    generateSessionToken() {
+        const array = new Uint8Array(32);
+        crypto.getRandomValues(array);
+        return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    }
+
+    /**
+     * Store session in localStorage
+     * @param {string} clientId - The client ID
+     */
+    storeSession(clientId) {
+        const session = {
+            token: this.sessionToken,
+            clientId: clientId,
+            timestamp: Date.now(),
+            expires: Date.now() + AUTH_CONFIG.sessionDuration
+        };
+        localStorage.setItem(AUTH_CONFIG.sessionKey, JSON.stringify(session));
+    }
+
+    /**
+     * Check if there's a valid stored session
+     * @returns {boolean} - True if valid session exists
+     */
+    checkStoredSession() {
+        const stored = localStorage.getItem(AUTH_CONFIG.sessionKey);
+        if (!stored) return false;
+
+        try {
+            const session = JSON.parse(stored);
+            
+            // Check if session is expired
+            if (Date.now() > session.expires) {
+                this.clearSession();
+                return false;
+            }
+
+            // Restore session
+            this.sessionToken = session.token;
+            this.isAuthenticated = true;
+            return true;
+        } catch (e) {
+            this.clearSession();
+            return false;
+        }
+    }
+
+    /**
+     * Clear the current session
+     */
+    clearSession() {
+        this.sessionToken = null;
+        this.isAuthenticated = false;
+        localStorage.removeItem(AUTH_CONFIG.sessionKey);
+    }
+
+    /**
+     * Logout the user
+     */
+    logout() {
+        this.clearSession();
+        showActivationOverlay();
+    }
+}
+
+// Create auth manager instance
+const authManager = new AuthManager();
+
+// ========================================
+// Activation UI Functions
+// ========================================
+
+/**
+ * Show the activation overlay
+ */
+function showActivationOverlay() {
+    const overlay = document.getElementById('activation-overlay');
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        document.body.classList.add('locked');
+    }
+}
+
+/**
+ * Hide the activation overlay
+ */
+function hideActivationOverlay() {
+    const overlay = document.getElementById('activation-overlay');
+    if (overlay) {
+        overlay.classList.add('hidden');
+        document.body.classList.remove('locked');
+    }
+}
+
+/**
+ * Show activation error
+ * @param {string} message - Error message to display
+ */
+function showActivationError(message) {
+    const errorDiv = document.getElementById('activation-error');
+    const errorMessage = document.getElementById('error-message');
+    
+    if (errorDiv && errorMessage) {
+        errorMessage.textContent = message;
+        errorDiv.classList.remove('hidden');
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+            errorDiv.classList.add('hidden');
+        }, 5000);
+    }
+}
+
+/**
+ * Show success animation
+ */
+function showActivationSuccess() {
+    const modal = document.querySelector('.activation-modal');
+    if (modal) {
+        modal.innerHTML = `
+            <div class="activation-success">
+                <i class="fas fa-check-circle"></i>
+                <h3>Activation Successful!</h3>
+                <p>Redirecting to application...</p>
+            </div>
+        `;
+        
+        // Hide overlay after animation
+        setTimeout(() => {
+            hideActivationOverlay();
+            // Show logout button
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.style.display = 'inline-flex';
+            }
+            showNotification('Page activated successfully! Welcome to Video Generator.', 'success');
+        }, 1500);
+    }
+}
+
+/**
+ * Handle activation form submission
+ * @param {Event} event - Form submit event
+ */
+function handleActivation(event) {
+    event.preventDefault();
+    
+    const clientId = document.getElementById('client-id').value.trim();
+    const clientSecret = document.getElementById('client-secret').value.trim();
+    const submitBtn = document.querySelector('.btn-activate');
+    
+    // Validate inputs
+    if (!clientId || !clientSecret) {
+        showActivationError('Please enter both Client ID and Secret');
+        return;
+    }
+    
+    // Disable button during validation
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validating...';
+    
+    // Simulate network delay for better UX
+    setTimeout(() => {
+        const result = authManager.validateCredentials(clientId, clientSecret);
+        
+        if (result.success) {
+            showActivationSuccess();
+        } else {
+            showActivationError(result.message);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-unlock"></i> Activate Page';
+        }
+    }, 500);
+}
+
+// ========================================
 // DOM Elements
 // ========================================
 const navbar = document.querySelector('.navbar');
@@ -197,11 +433,11 @@ if (generateBtn) {
                     This is a demo simulation. To generate actual videos, run the Python application locally or in Google Colab.
                 </p>
                 <div class="result-actions">
-                    <a href="https://colab.research.google.com/github/yourusername/advanced-video-generator" 
+                    <a href="https://colab.research.google.com/github/webcreaters-ux/advanced-video-generator" 
                        class="btn btn-primary" target="_blank">
                         <i class="fas fa-rocket"></i> Open in Colab
                     </a>
-                    <a href="https://github.com/yourusername/advanced-video-generator" 
+                    <a href="https://github.com/webcreaters-ux/advanced-video-generator" 
                        class="btn btn-secondary" target="_blank">
                         <i class="fab fa-github"></i> View Source
                     </a>
@@ -448,12 +684,52 @@ function typeWriter(element, text, speed = 50) {
 // Initialize
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication first
+    const isAuth = authManager.checkStoredSession();
+    
+    if (!isAuth) {
+        // Show activation overlay
+        showActivationOverlay();
+    } else {
+        // Show logout button
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.style.display = 'inline-flex';
+        }
+    }
+    
+    // Setup activation form
+    const activationForm = document.getElementById('activation-form');
+    if (activationForm) {
+        activationForm.addEventListener('submit', handleActivation);
+    }
+    
+    // Setup request access link
+    const requestAccess = document.getElementById('request-access');
+    if (requestAccess) {
+        requestAccess.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotification('Please contact the administrator to request access credentials.', 'info');
+        });
+    }
+    
+    // Setup logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            authManager.logout();
+            showNotification('You have been logged out.', 'info');
+        });
+    }
+    
     createParticles();
     
     // Add loaded class to body for animations
     document.body.classList.add('loaded');
     
     console.log('🎬 Advanced Video Generator - Web App Loaded');
+    console.log('🔐 Authentication status:', authManager.isAuthenticated ? 'Active' : 'Not authenticated');
 });
 
 // ========================================
@@ -488,6 +764,8 @@ document.addEventListener('keydown', (e) => {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         showNotification,
-        delay
+        delay,
+        authManager,
+        AuthManager
     };
 }

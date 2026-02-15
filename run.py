@@ -101,7 +101,7 @@ def show_version():
         version = "1.0.0 (development)"
     
     print(f"Advanced Video Generator v{version}")
-    print("https://github.com/yourusername/advanced-video-generator")
+    print("https://github.com/webcreaters-ux/advanced-video-generator")
 
 def list_extensions():
     """List available extensions"""

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Generator - AI Powered</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+        }
+        textarea {
+            border-radius: 15px;
+            resize: none;
+        }
+        .spinner {
+            display: none;
+        }
+        .result-video {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-4">
+                    <h1 class="text-white"><i class="fas fa-video"></i> AI Video Generator</h1>
+                    <p class="text-white-50">Generate professional videos from scripts using AI</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body p-4">
+                        <form id="generator-form">
+                            <div class="mb-3">
+                                <label for="script" class="form-label">Script Text</label>
+                                <textarea class="form-control" id="script" rows="6" 
+                                    placeholder="Enter your script here..." required></textarea>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="quality" class="form-label">Quality</label>
+                                    <select class="form-select" id="quality">
+                                        <option value="low">Low (720p)</option>
+                                        <option value="medium" selected>Medium (1080p)</option>
+                                        <option value="high">High (1440p)</option>
+                                        <option value="ultra">Ultra (4K)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tts-engine" class="form-label">TTS Engine</label>
+                                    <select class="form-select" id="tts-engine">
+                                        <option value="google" selected>Google TTS</option>
+                                        <option value="edge">Microsoft Edge</option>
+                                        <option value="coqui">Coqui TTS</option>
+                                        <option value="pyttsx3">pyttsx3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="generate-images" checked>
+                                    <label class="form-check-label" for="generate-images">
+                                        Generate AI Images
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="add-subtitles" checked>
+                                    <label class="form-check-label" for="add-subtitles">
+                                        Add Subtitles
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="add-transitions" checked>
+                                    <label class="form-check-label" for="add-transitions">
+                                        Add Transitions
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-rocket"></i> Generate Video
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <div class="spinner" id="spinner">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Generating video...</p>
+                            </div>
+                        </div>
+                        
+                        <div id="result" class="mt-4" style="display: none;">
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i> <span id="result-message"></span>
+                            </div>
+                            <div class="text-center">
+                                <a id="download-link" href="#" class="btn btn-success" download>
+                                    <i class="fas fa-download"></i> Download Video
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div id="error" class="mt-4" style="display: none;">
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle"></i> <span id="error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('generator-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const script = document.getElementById('script').value;
+            const quality = document.getElementById('quality').value;
+            const ttsEngine = document.getElementById('tts-engine').value;
+            const generateImages = document.getElementById('generate-images').checked;
+            const addSubtitles = document.getElementById('add-subtitles').checked;
+            const addTransitions = document.getElementById('add-transitions').checked;
+            
+            // Show spinner
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        script,
+                        quality,
+                        tts_engine: ttsEngine,
+                        generate_images: generateImages,
+                        add_subtitles: addSubtitles,
+                        add_transitions: addTransitions
+                    })
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('spinner').style.display = 'none';
+                
+                if (data.success) {
+                    document.getElementById('result-message').textContent = data.message;
+                    document.getElementById('download-link').href = data.video_url;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    document.getElementById('error-message').textContent = data.error;
+                    document.getElementById('error').style.display = 'block';
+                }
+            } catch (error) {
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('error-message').textContent = error.message;
+                document.getElementById('error').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
